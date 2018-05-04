@@ -7,7 +7,7 @@ This repository contains modified Nachos project. It is result of my 2016/2017 m
 
 Nachos usage in operating system courses was discontinued at Berkeley in 2014. This caused, that a lot of nachos parts were outdated (or rather this was the reason to discontinue Nachos usage). Therefor the thesis ended up being much more than just demonstrational implementation. Plenty of improvements were introduced to recover Nachos for Java and to change it, hopefully, for the better.
 
-To learn more about installation, usage and about project structure and phases head over to [Nachos wiki](https://gitlab.com/andrejkosar/dev-master-thesis/wikis/home).
+To learn more about installation, usage and about project structure and phases head over to [Nachos wiki](https://github.com/andrejkosar/nachos-6.0j/wiki).
 
 ## Improvements from Nachos 5.0j
 #### 1. ELF binary support
@@ -48,7 +48,7 @@ There are multiple things that can be considered as next tasks to improve Nachos
  - Introduce more tasks (or replace some of the existing) to better cover course syllabus.
 
 ## Authors
-[Andrej Kosar](https://gitlab.com/andrejkosar)
+[Andrej Kosar](https://github.com/andrejkosar)
 
 ## Credits
 Nachos was originally written by **Wayne A. Christopher**, **Steven J. Procter**, and **Thomas E. Anderson**. It incorporates the SPIM simulator written by **John Ousterhout**. Nachos was rewritten in Java by **Daniel Hettena**.
