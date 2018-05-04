@@ -1,0 +1,13 @@
+# CONFIGURATION TEMPLATE FOR 3. PHASE. USE IT TO GET STARTED WITH THIS PHASE.
+Machine.stubFileSystem = true
+Machine.processor = true
+Machine.console = true
+Machine.disk = false
+Machine.networkLink = false
+Processor.usingTLB = true
+Processor.numPhysPages = 16
+NachosRuntimeRecorder.recordSyscalls = false
+ThreadedKernel.scheduler = nachos.threads.RoundRobinScheduler
+Kernel.shellProgram = sh.elf
+Kernel.processClassName = nachos.vm.VMProcess
+Kernel.kernel = nachos.vm.VMKernel

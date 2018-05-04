@@ -1,0 +1,76 @@
+#
+# GNU Makefile for building user programs to run on top of Nachos
+#
+
+SHELL = /bin/bash
+
+# you need to point to the right executables
+GCCDIR = /path/to/mips-elf-xcompiler/x-mips-elf/bin/
+PREFIX = xmips-
+SUFFIX = .exe # or nothing when not using cygwin
+
+ASFLAGS = -EL -mips1
+CPPFLAGS =
+CFLAGS = -O2 -B$(GCCDIR) -G 0 -EL -Wa,-mips1 -nostdlib -ffreestanding -mno-abicalls
+LDFLAGS = -s -T script -N -warn-common -warn-constructors -warn-multiple-gp
+
+CC = $(GCCDIR)$(PREFIX)gcc$(SUFFIX)
+AS = $(GCCDIR)$(PREFIX)as$(SUFFIX)
+LD = $(GCCDIR)$(PREFIX)ld$(SUFFIX)
+CPP = $(GCCDIR)$(PREFIX)cpp$(SUFFIX)
+AR = $(GCCDIR)$(PREFIX)ar$(SUFFIX)
+RANLIB = $(GCCDIR)$(PREFIX)ranlib$(SUFFIX)
+
+STDLIB_H = stdio.h stdlib.h ag.h
+STDLIB_C = stdio.c stdlib.c
+STDLIB_O = start.o stdio.o stdlib.o
+
+LIB = assert atoi printf readline stdio strncmp strcat strcmp strcpy strlen memcpy memset
+NLIB = libnachos.a
+
+DEFAULT_TARGETS= halt sh matmult sort echo cat cp mv rm
+TARGETS = $(shell \
+            find -type f \
+                 -name '*.c' \
+                 -exec bash -c \
+                    'name=$$(basename {} .c); \
+                     if ! [[ "$(LIB) $(DEFAULT_TARGETS) stdlib" =~ .*([[:space:]]$$name)|([[:space:]]$$name[[:space:]])|($$name[[:space:]]).* ]] ; then \
+                        echo $$name; \
+                     fi' \;\
+                 | tr '\n' ' ' \
+                 | cat \
+          )
+.SECONDARY: $(patsubst %.c,%.o,$(wildcard *.c))
+
+all: $(patsubst %,%.elf,$(DEFAULT_TARGETS) $(TARGETS))
+
+clean:
+	@find ./ -regextype posix-extended \
+	         -type f \
+	         -not -regex '(^\./Makefile$$)|(^\./Makefile.template$$)|(^\./script$$)|(^\./script_coff$$)|(^\./start.s$$)|(^\./test_file.txt$$)|(^\./.+(\.(h|c))$$)' \
+	         -print0 \
+	         | xargs -0 rm -f
+
+tidy:
+    $(shell \
+     find ./ -regextype posix-extended \
+             -type f \
+             -not -regex '(^\./Makefile$$)|(^\./Makefile.template$$)|(^\./script$$)|(^\./script_coff$$)|(^\./start.s$$)|(^\./test_file.txt$$)|(^\./.+(\.(h|c|o|elf|a))$$)' \
+             -print0 \
+             | xargs -0 rm -f \ {}; \
+     printf "Test file contents" > test_file.txt \
+    )
+
+$(NLIB): $(patsubst %,$(NLIB)(%.o),$(LIB)) start.o
+	$(RANLIB) $(NLIB)
+
+start.o: start.s syscall.h
+	$(CPP) $(CPPFLAGS) start.s > strt.s
+	$(AS) $(ASFLAGS) -o start.o strt.s
+	rm strt.s
+
+%.o: %.c *.h
+	$(CC) $(CFLAGS) -c $<
+
+%.elf: %.o $(NLIB)
+	$(LD) $(LDFLAGS) -o $@ $< start.o -lnachos

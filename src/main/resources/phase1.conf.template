@@ -1,0 +1,9 @@
+# CONFIGURATION TEMPLATE FOR 1. PHASE. USE IT TO GET STARTED WITH THIS PHASE.
+Machine.stubFileSystem = false
+Machine.processor = false
+Machine.console = false
+Machine.disk = false
+Machine.networkLink = false
+NachosRuntimeRecorder.recordSyscalls = false
+ThreadedKernel.scheduler = nachos.threads.RoundRobinScheduler #nachos.threads.PriorityScheduler
+Kernel.kernel = nachos.threads.ThreadedKernel

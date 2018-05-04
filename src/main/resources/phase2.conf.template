@@ -1,0 +1,13 @@
+# CONFIGURATION TEMPLATE FOR 2. PHASE. USE IT TO GET STARTED WITH THIS PHASE.
+Machine.stubFileSystem = true
+Machine.processor = true
+Machine.console = true
+Machine.disk = false
+Machine.networkLink = false
+Processor.usingTLB = false
+Processor.numPhysPages = 64
+NachosRuntimeRecorder.recordSyscalls = false
+ThreadedKernel.scheduler = nachos.threads.RoundRobinScheduler #nachos.threads.LotteryScheduler
+Kernel.shellProgram = halt.elf #sh.elf
+Kernel.processClassName = nachos.userprog.UserProcess
+Kernel.kernel = nachos.userprog.UserKernel

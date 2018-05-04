@@ -1,0 +1,14 @@
+# CONFIGURATION TEMPLATE FOR 4. PHASE. USE IT TO GET STARTED WITH THIS PHASE.
+Machine.stubFileSystem = true
+Machine.processor = true
+Machine.console = true
+Machine.disk = false
+Machine.networkLink = true
+Processor.usingTLB = true
+Processor.numPhysPages = 16
+NachosRuntimeRecorder.recordSyscalls = false
+NetworkLink.reliability = 1.0 #use 0.9 when you're ready
+ThreadedKernel.scheduler = nachos.threads.RoundRobinScheduler
+Kernel.shellProgram = sh.elf
+Kernel.processClassName = nachos.network.NetProcess
+Kernel.kernel = nachos.network.NetKernel
