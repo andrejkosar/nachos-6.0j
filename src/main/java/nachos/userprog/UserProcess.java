@@ -512,6 +512,11 @@ public class UserProcess {
 
         //TODO(2.3) Implement exit syscall
 
+        //TODO(2.3) Important!! Call this report to NachosRuntimeRecorder with correct filename when required.
+        // If the file descriptor refers to a file marked for deletion by unlink
+        // and no processes have file open, delete it.
+        Machine.nachosRuntimeRecorder().reportFileDeletedByProcessOnExit(pid, "filename");
+
 
         Lib.assertNotReached("handleExit() did not stop the process!");
     }
@@ -745,7 +750,10 @@ public class UserProcess {
 
         //TODO(2.1) Implement close syscall
 
-
+        //TODO(2.1) Important!! Call this report to NachosRuntimeRecorder with correct filename when required.
+        // If the file descriptor refers to a file marked for deletion by unlink
+        // and no processes have file open, delete it.
+        Machine.nachosRuntimeRecorder().reportFileDeletedByProcessWithClose(pid, "filename");
 
 
         return -1;
@@ -772,7 +780,9 @@ public class UserProcess {
 
         //TODO(2.1) Implement unlink syscall
 
-
+        //TODO(2.1) Important!! Call this report to NachosRuntimeRecorder with correct filename when required.
+        // If file is still opened by some process register it for deletion.
+        // Otherwise delete it immediately.
 
         return -1;
     }
